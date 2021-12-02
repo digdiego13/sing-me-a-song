@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import singUp from './controllers/signUp/signUp.js';
+import postRecommendations from '';
 import signIn from './controllers/signIn/signIn.js';
 import logout from './controllers/logout.js';
 
@@ -13,9 +13,8 @@ app.get('/status', (req, res) => {
   res.send('Server online');
 });
 
-app.post('/sign-up', singUp);
+app.post('/sign-up', postRecommendations);
 app.post('/sign-in', signIn);
 app.post('/logout', logout);
-
 
 export default app;
