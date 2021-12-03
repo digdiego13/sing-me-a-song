@@ -4,7 +4,6 @@ function isYoutubeLink({ youtubeLink }) {
   const p =
     /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
   if (youtubeLink.match(p)) {
-    console.log('func yt');
     return true;
   }
   return false;
@@ -33,4 +32,19 @@ async function postRecommendationService({ youtubeLink, name }) {
   };
 }
 
-export { postRecommendationService };
+async function upRecommendationService(id) {
+  const upgratedVote = await recommendationRepository.updateVote(id);
+
+  if (upgratedVote.status === 1) {
+    return {
+      status: 1,
+      message: upgratedVote.message,
+    };
+  }
+  return {
+    status: 0,
+    message: upgratedVote.message,
+  };
+}
+
+export { postRecommendationService, upRecommendationService };

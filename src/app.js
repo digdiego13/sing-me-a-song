@@ -12,5 +12,9 @@ app.get('/status', (req, res) => {
 });
 
 app.post('/recommendations', recommendationController.postRecommendation);
+app.post(
+  '/recommendations/:id/upvote',
+  recommendationController.upRecommendations,
+);
 
 export default app;
