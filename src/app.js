@@ -1,8 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import postRecommendations from '';
-import signIn from './controllers/signIn/signIn.js';
-import logout from './controllers/logout.js';
+import * as recommendationController from './controllers/recommendationController.js';
 
 const app = express();
 app.use(cors());
@@ -13,8 +11,6 @@ app.get('/status', (req, res) => {
   res.send('Server online');
 });
 
-app.post('/sign-up', postRecommendations);
-app.post('/sign-in', signIn);
-app.post('/logout', logout);
+app.post('/recommendations', recommendationController.postRecommendation);
 
 export default app;

@@ -1,0 +1,19 @@
+
+
+CREATE TABLE "recommendation_list" (
+	"id" serial NOT NULL,
+	"music_name" varchar(255) NOT NULL,
+	"score" integer NOT NULL,
+	"link" TEXT NOT NULL,
+	"gender" TEXT NOT NULL,
+	CONSTRAINT "recommendation_list_pk" PRIMARY KEY ("id")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+
+
+
+

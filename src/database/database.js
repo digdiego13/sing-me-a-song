@@ -19,6 +19,7 @@ if (process.env.NODE_ENV === 'prod') {
     },
   };
 }
+console.log(process.env.DB_DATABASE);
 
 const connection = new Pool(connectionData);
 
