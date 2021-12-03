@@ -39,4 +39,17 @@ async function upRecommendations(req, res) {
   }
 }
 
-export { postRecommendation, upRecommendations };
+async function downRecommendations(req, res) {
+  const { id } = req.params;
+  try {
+    const downvote = await recommendationServices.downRecommendationService(id);
+    if (downvote.status === 1) {
+      return res.status(403).send(downvote.message);
+    }
+    return res.sendStatus(200);
+  } catch (erro) {
+    return res.sendStatus(500);
+  }
+}
+
+export { postRecommendation, upRecommendations, downRecommendations };

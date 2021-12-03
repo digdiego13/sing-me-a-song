@@ -16,5 +16,9 @@ app.post(
   '/recommendations/:id/upvote',
   recommendationController.upRecommendations,
 );
+app.post(
+  '/recommendations/:id/downvote',
+  recommendationController.downRecommendations,
+);
 
 export default app;

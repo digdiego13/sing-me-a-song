@@ -47,4 +47,23 @@ async function upRecommendationService(id) {
   };
 }
 
-export { postRecommendationService, upRecommendationService };
+async function downRecommendationService(id) {
+  const updatedVote = await recommendationRepository.downdateVote(id);
+
+  if (updatedVote.status === 1) {
+    return {
+      status: 1,
+      message: updatedVote.message,
+    };
+  }
+  return {
+    status: 0,
+    message: updatedVote.message,
+  };
+}
+
+export {
+  postRecommendationService,
+  upRecommendationService,
+  downRecommendationService,
+};

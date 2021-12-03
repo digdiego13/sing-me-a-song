@@ -1,5 +1,19 @@
 import connection from '../database/database.js';
 
+async function selectMusicById(id) {
+  const selectedMusicScore = await connection.query(
+    `SELECT * FROM recommendation_list WHERE id = $1
+  `,
+    [Number(id)],
+  );
+  if (selectedMusicScore.rowCount === 0) {
+    return undefined;
+  }
+  const { score } = selectedMusicScore.rows[0];
+  console.log(score);
+  return score;
+}
+
 async function insertRecommendation({ youtubeLink, name }) {
   const checkIfExistLink = await connection.query(
     `
@@ -26,18 +40,13 @@ async function insertRecommendation({ youtubeLink, name }) {
 }
 
 async function updateVote(id) {
-  const selectedMusicScore = await connection.query(
-    `SELECT * FROM recommendation_list WHERE id = $1
-  `,
-    [Number(id)],
-  );
-  if (selectedMusicScore.rowCount === 0) {
+  const score = await selectMusicById(id);
+  if (score === undefined) {
     return {
       status: 1,
       message: 'this music doesnt exist in our recommendation List',
     };
   }
-  const { score } = selectedMusicScore.rows[0];
   await connection.query(
     `
     UPDATE recommendation_list SET score = $1 WHERE id = $2
@@ -50,4 +59,25 @@ async function updateVote(id) {
   };
 }
 
-export { insertRecommendation, updateVote };
+async function downdateVote(id) {
+  const score = await selectMusicById(id);
+  if (score === undefined) {
+    return {
+      status: 1,
+      message: 'this music doesnt exist in our recommendation List',
+    };
+  }
+
+  await connection.query(
+    `
+    UPDATE recommendation_list SET score = $1 WHERE id = $2
+  `,
+    [score - 1, id],
+  );
+  return {
+    status: 0,
+    message: 'Downvote done',
+  };
+}
+
+export { insertRecommendation, updateVote, downdateVote };
