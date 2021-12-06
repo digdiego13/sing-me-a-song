@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import * as recommendationController from './controllers/recommendationController.js';
+import recommendationRouter from './routers/recommendationRouter.js';
 
 const app = express();
 app.use(cors());
@@ -11,20 +11,6 @@ app.get('/status', (req, res) => {
   res.send('Server online');
 });
 
-app.post('/recommendations', recommendationController.postRecommendation);
-app.post(
-  '/recommendations/:id/upvote',
-  recommendationController.upRecommendations,
-);
-app.post(
-  '/recommendations/:id/downvote',
-  recommendationController.downRecommendations,
-);
-
-app.get('/recommendations/random', recommendationController.getRecommendation);
-app.get(
-  '/recommendations/top/:amount',
-  recommendationController.getRecommendationAmount,
-);
+app.use('/recommendations', recommendationRouter);
 
 export default app;
