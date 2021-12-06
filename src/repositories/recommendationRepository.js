@@ -69,12 +69,21 @@ async function downdateVote(id) {
     };
   }
 
-  await connection.query(
+  const musicDownVoted = await connection.query(
     `
-    UPDATE recommendation_list SET score = $1 WHERE id = $2
+    UPDATE recommendation_list SET score = $1 WHERE id = $2 RETURNING *;
   `,
     [score - 1, id],
   );
+
+  if (musicDownVoted.rows[0].score < -5) {
+    await connection.query(
+      `
+      DELETE FROM recommendation_list WHERE id = $1
+      `,
+      [id],
+    );
+  }
   return {
     status: 0,
     message: 'Downvote done',

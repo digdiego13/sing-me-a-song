@@ -15,14 +15,16 @@ async function postRecommendation(req, res) {
         name,
       });
     if (insertRecommendation.status === 1) {
-      return res.status(401).send(insertRecommendation.message);
+      return res.status(400).send(insertRecommendation.message);
     }
     if (insertRecommendation.status === 2) {
-      return res.status(401).send(insertRecommendation.message);
+      return res.status(400).send(insertRecommendation.message);
     }
     return res.status(201).send(insertRecommendation.message);
   } catch (erro) {
-    return res.status(500);
+    return res
+      .status(500)
+      .send('insert recommendation failed due to server error.');
   }
 }
 
@@ -31,11 +33,11 @@ async function upRecommendations(req, res) {
   try {
     const upvote = await recommendationServices.upRecommendationService(id);
     if (upvote.status === 1) {
-      return res.status(403).send(upvote.message);
+      return res.status(404).send(upvote.message);
     }
     return res.sendStatus(200);
   } catch (erro) {
-    return res.sendStatus(500);
+    return res.status(500).send('up vote failed due to server error');
   }
 }
 
@@ -44,11 +46,11 @@ async function downRecommendations(req, res) {
   try {
     const downvote = await recommendationServices.downRecommendationService(id);
     if (downvote.status === 1) {
-      return res.status(403).send(downvote.message);
+      return res.status(404).send(downvote.message);
     }
     return res.sendStatus(200);
   } catch (erro) {
-    return res.sendStatus(500);
+    return res.status(500).send('Down vote failed due to server error');
   }
 }
 
@@ -57,11 +59,13 @@ async function getRecommendation(req, res) {
     const musicRecommended =
       await recommendationServices.getRecommendationMusic();
     if (musicRecommended.status === 1) {
-      return res.status(403).send(musicRecommended.message);
+      return res.status(404).send(musicRecommended.message);
     }
     return res.status(200).send(musicRecommended.message);
   } catch (erro) {
-    return res.sendStatus(500);
+    return res
+      .status(500)
+      .send('get recommendation failed due to server error');
   }
 }
 
@@ -74,12 +78,10 @@ async function getRecommendationAmount(req, res) {
     }
     const musicRecommended =
       await recommendationServices.getRecommendationMusicsAmount({ amount });
-    if (musicRecommended.status === 1) {
-      return res.status(403).send(musicRecommended.message);
-    }
+
     return res.status(200).send(musicRecommended.message);
   } catch (erro) {
-    return res.sendStatus(500);
+    return res.status(500).send('get amount failed due to server error');
   }
 }
 
