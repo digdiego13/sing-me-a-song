@@ -76,7 +76,6 @@ async function getRecommendationMusic() {
 
   const biggerThan10 = recommendations.filter((elem) => elem.score >= 10);
   const lessThan10 = recommendations.filter((elem) => elem.score < 10);
-  console.log(recommendations[randoness * recommendations.length]);
 
   if (
     (biggerThan10.length === 0 && lessThan10.length !== 0) ||

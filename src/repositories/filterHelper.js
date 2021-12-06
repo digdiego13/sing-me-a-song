@@ -15,7 +15,6 @@ export default function filterHelper({ amount, randoness }) {
     baseQuery += ' ORDER BY randon() DESC LIMIT 1';
   }
   baseQuery += ';';
-  console.log(baseQuery);
   return {
     baseQuery,
     preparedValues,

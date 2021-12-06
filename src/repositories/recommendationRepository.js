@@ -11,7 +11,6 @@ async function selectMusicById(id) {
     return undefined;
   }
   const { score } = selectedMusicScore.rows[0];
-  console.log(score);
   return score;
 }
 
@@ -91,9 +90,7 @@ async function downdateVote(id) {
 }
 
 async function selectrecommendation({ amount, randoness }) {
-  console.log('rep');
   const { baseQuery, preparedValues } = filterHelper({ amount, randoness });
-  console.log({ rep: baseQuery });
   const recommendation = await connection.query(baseQuery, preparedValues);
 
   if (randoness) {
