@@ -52,4 +52,41 @@ async function downRecommendations(req, res) {
   }
 }
 
-export { postRecommendation, upRecommendations, downRecommendations };
+async function getRecommendation(req, res) {
+  try {
+    const musicRecommended =
+      await recommendationServices.getRecommendationMusic();
+    if (musicRecommended.status === 1) {
+      return res.status(403).send(musicRecommended.message);
+    }
+    return res.status(200).send(musicRecommended.message);
+  } catch (erro) {
+    return res.sendStatus(500);
+  }
+}
+
+async function getRecommendationAmount(req, res) {
+  try {
+    const { amount } = req.params;
+
+    if (!Number(amount)) {
+      return res.sendStatus(400);
+    }
+    const musicRecommended =
+      await recommendationServices.getRecommendationMusicsAmount({ amount });
+    if (musicRecommended.status === 1) {
+      return res.status(403).send(musicRecommended.message);
+    }
+    return res.status(200).send(musicRecommended.message);
+  } catch (erro) {
+    return res.sendStatus(500);
+  }
+}
+
+export {
+  postRecommendation,
+  upRecommendations,
+  downRecommendations,
+  getRecommendation,
+  getRecommendationAmount,
+};

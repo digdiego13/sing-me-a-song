@@ -21,4 +21,10 @@ app.post(
   recommendationController.downRecommendations,
 );
 
+app.get('/recommendations/random', recommendationController.getRecommendation);
+app.get(
+  '/recommendations/top/:amount',
+  recommendationController.getRecommendationAmount,
+);
+
 export default app;

@@ -62,8 +62,56 @@ async function downRecommendationService(id) {
   };
 }
 
+async function getRecommendationMusic() {
+  const randoness = Math.random();
+  const recommendations = await recommendationRepository.selectrecommendation(
+    {},
+  );
+  if (recommendations.length === 0) {
+    return {
+      status: 1,
+      message: 'There is no recommendation music',
+    };
+  }
+
+  const biggerThan10 = recommendations.filter((elem) => elem.score >= 10);
+  const lessThan10 = recommendations.filter((elem) => elem.score < 10);
+  console.log(recommendations[randoness * recommendations.length]);
+
+  if (
+    (biggerThan10.length === 0 && lessThan10.length !== 0) ||
+    (biggerThan10.length !== 0 && lessThan10.length === 0)
+  ) {
+    return {
+      status: 0,
+      message: recommendations[Math.round(randoness * recommendations.length)],
+    };
+  }
+  if (randoness >= 0.7) {
+    return {
+      status: 0,
+      message: biggerThan10[Math.round(randoness * biggerThan10.length)],
+    };
+  }
+  return {
+    status: 0,
+    message: lessThan10[Math.round(randoness * lessThan10.length)],
+  };
+}
+
+async function getRecommendationMusicsAmount({ amount }) {
+  const recommendationList =
+    await recommendationRepository.selectrecommendation({ amount });
+  return {
+    status: 0,
+    message: recommendationList,
+  };
+}
+
 export {
   postRecommendationService,
   upRecommendationService,
   downRecommendationService,
+  getRecommendationMusic,
+  getRecommendationMusicsAmount,
 };

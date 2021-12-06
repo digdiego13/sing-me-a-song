@@ -1,3 +1,4 @@
+import filterHelper from './filterHelper.js';
 import connection from '../database/database.js';
 
 async function selectMusicById(id) {
@@ -80,4 +81,16 @@ async function downdateVote(id) {
   };
 }
 
-export { insertRecommendation, updateVote, downdateVote };
+async function selectrecommendation({ amount, randoness }) {
+  console.log('rep');
+  const { baseQuery, preparedValues } = filterHelper({ amount, randoness });
+  console.log({ rep: baseQuery });
+  const recommendation = await connection.query(baseQuery, preparedValues);
+
+  if (randoness) {
+    return recommendation.rows[0];
+  }
+  return recommendation.rows;
+}
+
+export { insertRecommendation, updateVote, downdateVote, selectrecommendation };
