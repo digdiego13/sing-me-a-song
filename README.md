@@ -1,44 +1,73 @@
-## Getting Started
+# Sing Me a Song
+## About this Project
+SIng me A Song is an API that give you recommendations musics.
 
-To get a local copy up and running follow these simple steps.
 
-### Prerequisites
+## Database Layout
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-```sh
-npm install npm@latest -g
+first of all, you can create a dev DATABASE just openning "createDatabase.txt" file and copying the scripts there.
+
+## Functionalities
+
+postRecommendation: create a music recommendation.The body must be in the following format:
+```
+{
+  name: 'bandName - songName',
+  youtubeLink: 'songYoutubeLink'
+}
 ```
 
-### Installation
+postUpvote: increses music score.
 
-1. Create a root project folder named gratibox
-```sh
-mkdir gratibox
+postDownvote: decreases music score.
+
+getRandomRecommendation: You will receive a random recommendation music. the recommendation logic is as follows:
+> * **70% of the time**: a song with a score higher than 10 is randomly recommended;
+> * **30% of the time**: a song with a score between -5 and 10 (inclusive) is randomly recommended;
+> * If there are only songs with a score above 10 or only below/equal to 10, 100% of the time any song is recommended;
+
+
+getRecommendationAmount: You can get a list of recommendation musics.
+
+## Installing
+
+**Cloning the Repository**
+
 ```
-2. Clone the back-end repo
-```sh
-git clone https://github.com/digdiego13/gratibox-backend.git
-```
-3. Install NPM packages for the back-end repo
-```sh
-npm install
-```
-4. Clone the front-end repo as a sibling to the back-end (within the /gratibox folder)
-```sh
-git clone https://github.com/digdiego13/gratibox-front.git
-```
-5. Install NPM packages for the front-end repo
-```sh
-npm install
+$ git clone https://github.com/digdiego13/sing-me-a-song.git
 ```
 
-6 - use the dump of the database to create it on your postgres.
+**Installing dependencies**
 
-### Inicialization
-
-```sh
-ntl
+```
+$ npm install
 ```
 
-then, you can choose to start the DEV.
+**Run the application in production mode**
+the production mode is deployed by HEROKU on URL: "https://singmeamusic.herokuapp.com/"
+```
+$ ntl -> start
+```
+**Run the application in development mode**
+
+Create a .env.dev file and fill it using your environment variables following the .env.example
+
+```
+$ ntl -> start:dev
+```
+
+**Run test mode**
+
+```
+$ ntl -> test:watch
+```
+
+## Technologies
+Main thechnologies used in the construction of the project:<br>
+<p>
+  <img src="https://img.shields.io/badge/-Nodejs-green?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/-Express-green?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/-PostgreSQL-green?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/-Jest-green?style=for-the-badge" />
+</p>
+
